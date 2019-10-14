@@ -67,8 +67,8 @@ void Target::Update(sf::Event& event) {
 		HANDRIGHT_z = (kinectApplication.DepthSkeletonPoints(HANDRIGHT) + kinectApplication.DepthSkeletonPoints(WRISTRIGHT) + kinectApplication.DepthSkeletonPoints(HANDTIPRIGHT) + kinectApplication.DepthSkeletonPoints(THUMBRIGHT) + kinectApplication.DepthSkeletonPoints(ELBOWRIGHT)) / 5;
 
 
-		HANDRIGHT_xy.x = HANDRIGHT_xy.x * 1900 / 640; //translate to pixel
-		HANDRIGHT_xy.y = HANDRIGHT_xy.y * 1080 / 280; //same
+		HANDRIGHT_xy.x = HANDRIGHT_xy.x * 1900 / 640 *1/1; //translate to pixel
+		HANDRIGHT_xy.y = HANDRIGHT_xy.y * 1080 / 280 *1 / 1;//same
 		if (HANDRIGHT_z >= _trashHold) {
 			if (animationClock.getElapsedTime().asMilliseconds() > 100) {						//need instad (event.type == sf::Event::MouseButtonPressed) to avoid mass click to target
 				if ((dist2(VisibleGameObject::getCenter(), HANDRIGHT_xy) < 6400))
