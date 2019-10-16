@@ -127,6 +127,7 @@ void Game::Init(int targ_count) {
 	for (int i = 0; i < targ_count; i++) {
 		Target *tar = new Target();
 		tar->Load(targetFileNames[i]);
+		tar->setKinectControl(true);
 		_gameObjectManager.Add(std::to_string(i), tar);
 	}
 
@@ -137,6 +138,9 @@ void Game::Init(int targ_count) {
 	SmashCounter *counter = new SmashCounter();
 	counter->Load("font/11583.ttf");
 	_gameObjectManager.Add("counter", counter);
+
+
+	
 }
 
 void Game::reInit(int targ_count)

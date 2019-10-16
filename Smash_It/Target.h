@@ -3,6 +3,7 @@
 #include <random>
 #include "VisibleGameObject.h"
 #include "BodyBasics.h"
+#include "Kinect.h"
 
 
 class Target :
@@ -19,7 +20,7 @@ public:
 	void reInit();
 	int getRandomNumber(int min, int max);
 	float dist2(sf::Vector2f const & p1, sf::Vector2f const & p2);
-	void setKinectControl(bool kinectControl);
+	void setKinectControl(bool kinectControl);		//use(set) in Game Init
 
 
 private:
@@ -44,6 +45,8 @@ private:
 	float HANDRIGHT_z;
 	float _trashHold;				//depth from sensor where interaction starts
 	CBodyBasics kinectApplication;
+	sf::Vector2f joint_xy;
+	float joint_z;
 
 	enum {
 		SPINEBASE,

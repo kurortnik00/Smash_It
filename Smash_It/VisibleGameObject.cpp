@@ -25,7 +25,7 @@ void VisibleGameObject::Load(std::string filename)		//Простейшая загрузка спрайт
 	{
 		_filename = filename;
 
-		_image.createMaskFromColor(sf::Color(255, 255, 255));
+		_image.createMaskFromColor(sf::Color(255,255,255));
 		_texture.loadFromImage(_image);
 		//_texture.setSmooth(true);
 
