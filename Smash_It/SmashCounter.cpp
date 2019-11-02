@@ -4,7 +4,7 @@ SmashCounter::SmashCounter():
 	text("", font, 150)
 {
 	text.setStyle(sf::Text::Bold);
-	text.setPosition(1050, 100);
+	text.setPosition(1750, 100);
 	finished = false;
 	finishedScore = 0;
 	smashCount = 0;
@@ -18,7 +18,7 @@ void SmashCounter::Load(std::string filename) {
 	font.loadFromFile(filename);
 }
 
-int SmashCounter::GetCount() {
+int SmashCounter::getCount() {
 	return smashCount;
 }
 
@@ -52,7 +52,7 @@ void SmashCounter::reInit() {
 	text.setCharacterSize(150);
 	smashCount = 0;
 	text.setStyle(sf::Text::Bold);
-	text.setPosition(1050, 0);
+	text.setPosition(1750, 0);
 	finished = false;
 }
 

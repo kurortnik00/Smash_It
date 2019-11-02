@@ -16,6 +16,9 @@ public:
 	virtual bool getFinished();
 	virtual void reInit();
 	virtual void countIncroment();
+	//virtual sf::Sprite& GetSprite();
+	virtual void setScale(sf::Vector2f scale);
+	virtual int getCount();
 	
 	virtual void SetPosition(float x, float y);
 	virtual sf::Vector2f GetPosition() const;
@@ -24,6 +27,8 @@ public:
 
 	virtual void setClickState(bool ans);
 	virtual sf::Vector2f getCenter();
+
+	virtual float getFinishedTime();
 
 
 	void setPlased(bool res);

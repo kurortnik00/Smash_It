@@ -20,7 +20,7 @@ void Game::Start(void)	//инициализация объектов
 	srand(static_cast<unsigned int>(time(0)));
 
 
-	_gameState = Game::ShowingSplash;		//Начинаем с заставки
+	_gameState = Game::ShowingMenu;		//Начинаем с меню
 
 	while (!IsExiting())
 	{
@@ -84,7 +84,16 @@ void Game::GameLoop()
 					_gameState = Game::ShowingMenu;
 				}
 			}
+			if (_gameObjectManager.Get("timer1")->getFinished())
+			{
+				_gameState = Game::GameOver;
+				
+			}
 			break;
+		}
+		case Game::GameOver:
+		{
+			GameOver_Screen();
 		}
 	}
 }
@@ -101,10 +110,9 @@ void Game::ShowSplashScreen()
 void Game::ShowMenu()
 {
 	MainMenu mainMenu;
-	MainMenu::MenuResult result = mainMenu.Show(_mainWindow);   //Возврацает значение нажатой "кнопки", т.е. что делать дальше: Играть или выйти из игры
+	MainMenu::MenuResult result = mainMenu.Show(_mainWindow, TOP_List);   //Возврацает значение нажатой "кнопки", т.е. что делать дальше: Играть или выйти из игры
 																//Внутри бесконечный цикл прерываемый по нажатию одной из "кнопок" или закрытию окна
 																	
-
 	switch (result)
 	{
 		case MainMenu::Exit:
@@ -127,7 +135,7 @@ void Game::Init(int targ_count) {
 	for (int i = 0; i < targ_count; i++) {
 		Target *tar = new Target();
 		tar->Load(targetFileNames[i]);
-		tar->setKinectControl(true);
+		tar->setKinectControl(false);
 		_gameObjectManager.Add(std::to_string(i), tar);
 	}
 
@@ -164,10 +172,25 @@ int Game::getRandomNumber(int min, int max)
 	return static_cast<int>(rand() * fraction * (max - min + 1) + min);
 }
 
+void Game::TOP_List_Update()
+{
+	std::string name;
+	std::cin >> name;
+	TOP_List.insert(std::make_pair(name, _gameObjectManager.Get("counter")->getCount()));
+}
+
+
+void Game::GameOver_Screen()
+{
+	TOP_List_Update();
+	_gameState = Game::ShowingMenu;
+}
+
 GameObjectManager Game::_gameObjectManager;
 Game::GameState Game::_gameState = Uninitialized;
 sf::RenderWindow Game::_mainWindow;
 int Game::targetCount = 7;				//max targets = 14 if you wana more change Init()
+std::map<std::string, float> Game::TOP_List = { {"afaf", 124} };
 
 
 

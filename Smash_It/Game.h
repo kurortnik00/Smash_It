@@ -24,14 +24,17 @@ private:
 	static void reInit(int targ_count);
 	static int  targetCount;
 	static int getRandomNumber(int min, int max);
+	static void TOP_List_Update();
+	static void GameOver_Screen();
 	
 	enum GameState {
 		Uninitialized, ShowingSplash, Paused,
-		ShowingMenu, Playing, Exiting, Custom
+		ShowingMenu, Playing, Exiting, GameOver
 	};
 
 	static GameState _gameState;
 	static sf::RenderWindow _mainWindow;
 	static GameObjectManager _gameObjectManager;
 	static int smashCount;
+	static std::map<std::string, float> TOP_List;
 };

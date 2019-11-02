@@ -9,7 +9,7 @@ Timer::Timer() :
 
 	gameTimeClock.restart();
 	text.setStyle(sf::Text::Bold);
-	text.setPosition(50, 400);
+	text.setPosition(20, -20);
 	finished = false;
 	finishedTime = 0;
 }
@@ -33,6 +33,8 @@ void Timer::Draw(sf::RenderWindow & renderWindow) {
 	if (finished) {
 		gameTime = finishedTime;
 	}
+	
+	if (gameTime > 10) setFinished(true);    ///should be in Update function
 
 	std::ostringstream timerStr;
 	timerStr << gameTime;
@@ -59,7 +61,12 @@ void Timer::reInit() {
 	text.setCharacterSize(150);
 	gameTimeClock.restart();
 	text.setStyle(sf::Text::Bold);
-	text.setPosition(50, 400);
+	text.setPosition(20, -20);
 	finished = false;
+}
+
+float Timer::getFinishedTime()
+{
+	return finishedTime;
 }
 	

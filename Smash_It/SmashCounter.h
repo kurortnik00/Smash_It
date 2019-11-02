@@ -10,7 +10,7 @@ public:
 	void Load(std::string filename);
 	void countIncroment();
 	void Draw(sf::RenderWindow & renderWindow);
-	int GetCount();
+	int getCount();
 	void setFinished(bool res);
 	bool getFinished();
 	void reInit();

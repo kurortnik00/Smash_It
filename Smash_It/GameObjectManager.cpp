@@ -7,7 +7,7 @@
 GameObjectManager::GameObjectManager()
 {
 	sf::Image image;
-	image.loadFromFile("images/bluemoon.png");
+	image.loadFromFile("images/back_ground_1.png");
 	//создаем объект Texture (текстура)
 	logotexture.loadFromImage(image);//передаем в него объект Image (изображения)
 	//создаем объект Sprite(спрайт)
@@ -90,3 +90,5 @@ void GameObjectManager::setAllPlased()
 		itr++;
 	}
 }
+
+

@@ -118,3 +118,17 @@ void VisibleGameObject::reInit() {
 void VisibleGameObject::countIncroment() {
 
 }
+
+int VisibleGameObject::getCount() {
+	return 4;
+}
+
+void VisibleGameObject::setScale(sf::Vector2f scale)
+{
+	_sprite.setScale(scale);
+}
+
+float VisibleGameObject::getFinishedTime()
+{
+	return 0;
+}
