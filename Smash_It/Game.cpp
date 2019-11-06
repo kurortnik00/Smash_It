@@ -6,7 +6,10 @@
 #include "Timer.h"
 #include "CustomScreen.h"
 #include "SmashCounter.h"
+#include "myKeyboard.h"
 #include <random>
+#include <iomanip>
+#include <sstream>
 
 
 
@@ -174,10 +177,53 @@ int Game::getRandomNumber(int min, int max)
 
 void Game::TOP_List_Update()
 {
-	std::string name;
-	std::cin >> name;
-	TOP_List.insert(std::make_pair(name, _gameObjectManager.Get("counter")->getCount()));
+	sf::Event currentEvent;	
+	std::string name = "";
+	std::string scoreString = "Score: ";
+
+	std::stringstream stream;
+	stream << std::fixed << std::setprecision(0) << (int) _gameObjectManager.Get("counter")->getCount();
+	scoreString += stream.str();
+
+	
+	while (!sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+	{
+		_mainWindow.pollEvent(currentEvent);
+		if (currentEvent.type == sf::Event::KeyPressed)
+		{
+			name += MyKeyboard::getChar();
+		}
+		
+		_mainWindow.clear(sf::Color(0, 0, 0));
+
+		sf::Font font;
+		font.loadFromFile("font/11583.ttf");
+
+		sf::Text gameOverText("Game Over", font, 150);
+		gameOverText.setPosition(_mainWindow.getSize().x / 2 - 400, 100);
+
+		sf::Text scoreText(scoreString, font, 150);
+		scoreText.setPosition(_mainWindow.getSize().x / 2 - 400, 250);
+
+		sf::Text text(name, font, 150);
+		text.setPosition(_mainWindow.getSize().x / 2 - 300, 400);
+		
+
+		_mainWindow.draw(text);
+		_mainWindow.draw(scoreText);
+		_mainWindow.draw(gameOverText);
+		_mainWindow.display();
+	}
+
+
+	if (TOP_List.size() > 4) TOP_List.erase(TOP_List.begin());
+
+	TOP_List.insert(std::make_pair(_gameObjectManager.Get("counter")->getCount(), name));
+	
+	
+
 }
+
 
 
 void Game::GameOver_Screen()
@@ -190,7 +236,7 @@ GameObjectManager Game::_gameObjectManager;
 Game::GameState Game::_gameState = Uninitialized;
 sf::RenderWindow Game::_mainWindow;
 int Game::targetCount = 7;				//max targets = 14 if you wana more change Init()
-std::map<std::string, float> Game::TOP_List = { {"afaf", 124} };
+std::set<std::pair<float, std::string>> Game::TOP_List = { {6, "ASd"} , {5, "zzz"} , {1, "qq"} , {4, "44"} };
 
 
 

@@ -36,5 +36,6 @@ private:
 	static sf::RenderWindow _mainWindow;
 	static GameObjectManager _gameObjectManager;
 	static int smashCount;
-	static std::map<std::string, float> TOP_List;
+	static std::set<std::pair<float, std::string>> TOP_List;
+
 };

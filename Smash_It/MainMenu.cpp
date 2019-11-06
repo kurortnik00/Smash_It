@@ -25,7 +25,7 @@ MainMenu::MenuItem::MenuItem(sf::Vector2f position, MenuResult action)
 	_stringSprite.setPosition(_center + sf::Vector2f(-30, 150));
 }
 
-MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window, std::map<std::string, float>& TOP_List)
+MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window, std::set<std::pair<float, std::string>>& TOP_List)
 {
 	MainMenu::velocity = sf::Vector2f(0, 0.01);
 	//Load menu image from file
@@ -65,15 +65,46 @@ MainMenu::MenuResult MainMenu::Show(sf::RenderWindow& window, std::map<std::stri
 	
 	if (clicResult == Score_board)
 	{
-		std::map<std::string, float>::const_iterator itr = TOP_List.begin();
-		while (itr != TOP_List.end())
+		int scoresCount = 1;
+		//std::set<std::string, float>::const_iterator itr = TOP_List.begin();
+		std::vector<sf::Text> plaersScore;
+		sf::Font font;
+		font.loadFromFile("font/11583.ttf");
+
+
+
+		std::set<std::pair<float, std::string>>::reverse_iterator rit;
+
+		for (rit = TOP_List.rbegin(); rit != TOP_List.rend(); ++rit)
 		{
-			std::cout << itr->first;
-			std::cout << "    ";
-			std::cout << itr->second;
-			std::cout << "\n";
-			itr++;
+
+			std::string plaerScore_str = std::to_string(scoresCount) + ". " + rit->second + "       " + std::to_string((int)rit->first);
+			sf::Text plaerScore(plaerScore_str, font, 150);
+			plaerScore.setPosition(window.getSize().x / 2 - 400, 200 + 100 * scoresCount);
+			plaersScore.push_back(plaerScore);
+
+			scoresCount++;
 		}
+
+		
+		while (!sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+		{
+			sf::Text topScore("TOP SCORE", font, 150);
+			topScore.setPosition(window.getSize().x / 2 - 400, 100);
+
+
+			window.clear(sf::Color(0, 0, 0));
+			window.draw(topScore);
+			for (int i = 0; i < plaersScore.size(); i++)
+			{
+				window.draw(plaersScore[i]);
+			}
+			
+			window.display();
+
+		}
+
+		
 	}
 
 	return clicResult;

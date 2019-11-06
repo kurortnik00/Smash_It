@@ -134,6 +134,7 @@
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="myKeyboard.cpp" />
     <ClCompile Include="SmashCounter.cpp" />
     <ClCompile Include="SplashScreen.cpp" />
     <ClCompile Include="Target.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="myKeyboard.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SmashCounter.h" />
     <ClInclude Include="SplashScreen.h" />

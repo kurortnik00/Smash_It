@@ -32,7 +32,7 @@ public:
 	};
 	
 
-	MenuResult Show(sf::RenderWindow& window, std::map<std::string, float>& TOP_List);
+	MenuResult Show(sf::RenderWindow& window, std::set<std::pair<float, std::string>>& TOP_List);
 	void Update(sf::RenderWindow& window);
 	float dist2(sf::Vector2f const & p1, sf::Vector2f const & p2);
 	void Draw(sf::RenderWindow& window);
