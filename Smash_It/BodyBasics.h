@@ -74,6 +74,9 @@ public:
 	float					allJoints_timeAveraged_DepthPoints(int i);
 
 
+	sf::Vector2f			arms_legs_timeAveraged_PointsXY(int i);
+	float					arms_legs_timeAveraged_DepthPoints(int i);
+
 private:
 	HWND                    m_hWnd;
 	INT64                   m_nStartTime;
@@ -167,15 +170,22 @@ private:
 
 	struct JointPoints_buffer
 	{
-		D2D1_POINT_2F  Joints[JointType_Count];
+		D2D1_POINT_2F  joints[JointType_Count];
 	};
 	std::vector<JointPoints_buffer> buffer;
 
 	struct JointPoints_Depthbuffer
 	{
 		float jointsDepth[JointType_Count];
+		float jointsDepth_4[LEFT_LEG+1];
 	};
 	std::vector<JointPoints_Depthbuffer> depthBuffer;
+
+	struct JointPoints_vec_buffer
+	{
+		sf::Vector2f  joints[LEFT_LEG+1];
+	};
+	std::vector<JointPoints_vec_buffer> vec_Buffer;
 
 	enum {
 		SPINEBASE,

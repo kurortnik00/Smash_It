@@ -106,15 +106,23 @@ void Target::Update(sf::Event& event) {
 
 void Target::Draw(sf::RenderWindow & window) 
 {
-	sf::CircleShape _shape;
+	sf::CircleShape _shape1;
 	float _radius = 30;
-	_shape.setFillColor(sf::Color(0, 0, 0));
-	_shape.setRadius(_radius);
-	_shape.setOutlineThickness(10);
-	_shape.setOutlineColor(sf::Color(250, 150, 100));
-	_shape.setPosition(kinectApplication.allJoints_timeAveraged_PointsXY(HANDRIGHT));
+	_shape1.setFillColor(sf::Color(0, 0, 0));
+	_shape1.setRadius(_radius);
+	_shape1.setOutlineThickness(10);
+	_shape1.setOutlineColor(sf::Color(250, 150, 100));
+	_shape1.setPosition(kinectApplication.allJoints_timeAveraged_PointsXY(HANDRIGHT));
 
-	window.draw(_shape);
+	sf::CircleShape _shape2;
+	_shape2.setFillColor(sf::Color(0, 0, 0));
+	_shape2.setRadius(_radius);
+	_shape2.setOutlineThickness(10);
+	_shape2.setOutlineColor(sf::Color(250, 150, 100));
+	_shape2.setPosition(kinectApplication.allJoints_timeAveraged_PointsXY(HANDLEFT));
+
+	window.draw(_shape1);
+	window.draw(_shape2);
 
 
 	VisibleGameObject::Draw(window); 
