@@ -59,38 +59,28 @@ void Target::setClickState(bool ans)
 
 void Target::Update(sf::Event& event) {
 
+	tracking_Type tP = allJoints;
+
 	//_kinectControl set true or false in Game Init
 	if (_kinectControl) {
-		for (int i = 0; i < JointType_Count; i++) {
 
-			joint_xy = sf::Vector2f(kinectApplication.SkeletPointsXY(i).x, kinectApplication.SkeletPointsXY(i).y);
-			joint_z = kinectApplication.DepthSkeletonPoints(i);
+		int joint_Count = 0;
 
-			/*HANDRIGHT_xy = sf::Vector2f((kinectApplication.SkeletPointsXY(HANDRIGHT).x + kinectApplication.SkeletPointsXY(WRISTRIGHT).x + kinectApplication.SkeletPointsXY(HANDTIPRIGHT).x + kinectApplication.SkeletPointsXY(THUMBRIGHT).x) / 4,
-				(kinectApplication.SkeletPointsXY(HANDRIGHT).y + kinectApplication.SkeletPointsXY(WRISTRIGHT).y + kinectApplication.SkeletPointsXY(HANDTIPRIGHT).y + kinectApplication.SkeletPointsXY(THUMBRIGHT).y) / 4);
-			HANDRIGHT_z = (kinectApplication.DepthSkeletonPoints(HANDRIGHT) + kinectApplication.DepthSkeletonPoints(WRISTRIGHT) + kinectApplication.DepthSkeletonPoints(HANDTIPRIGHT) + kinectApplication.DepthSkeletonPoints(THUMBRIGHT) + kinectApplication.DepthSkeletonPoints(ELBOWRIGHT)) / 5;
-*/
-
-			//HANDRIGHT_xy.x = HANDRIGHT_xy.x * 1900 / 640 * 1 / 1; //translate to pixel
-			//HANDRIGHT_xy.y = HANDRIGHT_xy.y * 1080 / 280 * 1 / 1;//same
-
-			joint_xy.x = joint_xy.x * 1900 / 640 * 1 / 1; //translate to pixel
-			joint_xy.y = joint_xy.y * 1080 / 280 * 1 / 1;//same
-
-
-			if (joint_z >= _trashHold) {
-				if (animationClock.getElapsedTime().asMilliseconds() > 100) {						//need instad (event.type == sf::Event::MouseButtonPressed) to avoid mass click to target
-					if ((dist2(VisibleGameObject::getCenter(), joint_xy) < 6400))
-					{
-						hasClicked = true;
-						animationStart = true;
-						animationClock.restart();
-					}
-				}
-			}
+		switch (tP)
+		{
+		case Target::allJoints:
+			joint_Count = JointType_Count;
+			kinectUpdateActions(joint_Count, tP);
+			break;
+		case Target::mainPointAvarage:
+			joint_Count = 4;
+			kinectUpdateActions(joint_Count, tP);
+			break;
+		default:
+			break;
 		}
+		
 	}
-
 	
 	else {
 		if (event.type == sf::Event::MouseButtonPressed)
@@ -109,6 +99,25 @@ void Target::Update(sf::Event& event) {
 	
 	velocityAnimation();
 	animation();
+
+	
+	
+}
+
+void Target::Draw(sf::RenderWindow & window) 
+{
+	sf::CircleShape _shape;
+	float _radius = 30;
+	_shape.setFillColor(sf::Color(0, 0, 0));
+	_shape.setRadius(_radius);
+	_shape.setOutlineThickness(10);
+	_shape.setOutlineColor(sf::Color(250, 150, 100));
+	_shape.setPosition(kinectApplication.allJoints_timeAveraged_PointsXY(HANDRIGHT));
+
+	window.draw(_shape);
+
+
+	VisibleGameObject::Draw(window); 
 	
 }
 
@@ -207,4 +216,44 @@ void Target::setRandomFlyStart()				//ÐÀÇÎÁÐÀÒÜÑß Ñ ÍÀÏÐÀÂËÅÍÈÅÌ ÑÊÎÐÎÑÒÈ Â ÑËÓ×
 //use(set) in Game Init
 void Target::setKinectControl(bool kinectCOontrol) {
 	_kinectControl = kinectCOontrol;
+}
+
+void Target::kinectUpdateActions(int joint_Count, tracking_Type tP)
+{
+	for (int i = 0; i < joint_Count; i++) {
+
+		switch (tP)
+		{
+		case Target::allJoints:
+			joint_xy = sf::Vector2f(kinectApplication.SkeletPointsXY(i).x, kinectApplication.SkeletPointsXY(i).y);
+			joint_z = kinectApplication.DepthSkeletonPoints(i);
+			break;
+		case Target::mainPointAvarage:
+			joint_xy = kinectApplication.arms_legs_pointAveraged_PointsXY(i);
+			joint_z = kinectApplication.arms_legs_pointAveraged_DepthPoints(i);
+			break;
+		case Target::allJointsTimeAvarage:
+			joint_xy = kinectApplication.allJoints_timeAveraged_PointsXY(i);
+			joint_z = kinectApplication.allJoints_timeAveraged_DepthPoints(i);
+			break;
+		default:
+			break;
+		}
+		
+
+		joint_xy.x = joint_xy.x * 1900 / 640 * 1 / 1; //translate to pixel
+		joint_xy.y = joint_xy.y * 1080 / 280 * 1 / 1;//same
+
+
+		if (joint_z >= _trashHold) {
+			if (animationClock.getElapsedTime().asMilliseconds() > 100) {						//need instad (event.type == sf::Event::MouseButtonPressed) to avoid mass click to target
+				if ((dist2(VisibleGameObject::getCenter(), joint_xy) < 6400))
+				{
+					hasClicked = true;
+					animationStart = true;
+					animationClock.restart();
+				}
+			}
+		}
+	}
 }

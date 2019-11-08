@@ -177,6 +177,7 @@ int Game::getRandomNumber(int min, int max)
 
 void Game::TOP_List_Update()
 {
+
 	sf::Event currentEvent;	
 	std::string name = "";
 	std::string scoreString = "Score: ";

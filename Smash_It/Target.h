@@ -21,6 +21,7 @@ public:
 	int getRandomNumber(int min, int max);
 	float dist2(sf::Vector2f const & p1, sf::Vector2f const & p2);
 	void setKinectControl(bool kinectControl);		//use(set) in Game Init
+	void Draw(sf::RenderWindow & window);
 
 
 private:
@@ -41,6 +42,13 @@ private:
 	float animationTime;
 	bool _kinectControl;
 
+
+	enum tracking_Type
+	{
+		allJoints, mainPointAvarage, allJointsTimeAvarage
+	};
+
+	void kinectUpdateActions(int joint_Count, tracking_Type tT);
 	sf::Vector2f HANDRIGHT_xy;
 	float HANDRIGHT_z;
 	float _trashHold;				//depth from sensor where interaction starts
@@ -75,5 +83,7 @@ private:
 		HANDTIPRIGHT,
 		THUMBRIGHT,
 	};
+
+	
 
 };
