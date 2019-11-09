@@ -138,7 +138,7 @@ void Game::Init(int targ_count) {
 	for (int i = 0; i < targ_count; i++) {
 		Target *tar = new Target();
 		tar->Load(targetFileNames[i]);
-		tar->setKinectControl(false);
+		tar->setKinectControl(kinectControl);
 		_gameObjectManager.Add(std::to_string(i), tar);
 	}
 
@@ -238,6 +238,7 @@ Game::GameState Game::_gameState = Uninitialized;
 sf::RenderWindow Game::_mainWindow;
 int Game::targetCount = 7;				//max targets = 14 if you wana more change Init()
 std::set<std::pair<float, std::string>> Game::TOP_List = { {6, "ASd"} , {5, "zzz"} , {1, "qq"} , {4, "44"} };
+bool kinectControl = true;
 
 
 

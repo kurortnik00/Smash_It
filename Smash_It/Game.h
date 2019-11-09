@@ -37,5 +37,6 @@ private:
 	static GameObjectManager _gameObjectManager;
 	static int smashCount;
 	static std::set<std::pair<float, std::string>> TOP_List;
+	static bool kinectControl;
 
 };

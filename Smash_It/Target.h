@@ -41,11 +41,13 @@ private:
 	float velocityAnimationTime;
 	float animationTime;
 	bool _kinectControl;
+	float kinectTranform_X_Cordinates(float x);
+	float kinectTranform_Y_Cordinates(float y);
 
 
 	enum tracking_Type
 	{
-		allJoints, mainPointAvarage, allJointsTimeAvarage
+		allJoints, mainPointAvarage, allJointsTimeAvarage, mainPointTimeAvarage
 	};
 
 	void kinectUpdateActions(int joint_Count, tracking_Type tT);

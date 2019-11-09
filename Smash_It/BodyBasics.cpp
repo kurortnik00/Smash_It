@@ -200,7 +200,7 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 						{
 							jointPoints[j] = BodyToScreen(joints[j].Position, width, height);
 							trackPointsXY[j] = jointPoints[j];
-							trackDepthPoint[j] = joints->Position.Z;
+							trackDepthPoint[j] = joints[j].Position.Z;
 							
 
 
@@ -318,12 +318,14 @@ sf::Vector2f CBodyBasics::allJoints_timeAveraged_PointsXY(int limb)
 	
 	buffer.push_back(jointPoints);
 	if (buffer.size() > 5) buffer.erase(buffer.begin());
+	int flag = 0;
 	for (auto &i : buffer)
 	{
 		for (int j = 0; j < JointType_Count; j++)
 		{
-			if (j == 0)
+			if (flag == 0)
 			{
+				
 				timeAveraged_Point[j].x = i.joints[j].x;
 				timeAveraged_Point[j].y = i.joints[j].y;
 			}
@@ -333,6 +335,7 @@ sf::Vector2f CBodyBasics::allJoints_timeAveraged_PointsXY(int limb)
 				timeAveraged_Point[j].y += i.joints[j].y;
 			}
 		}
+		flag = 1;
 	}
 	for (int j = 0; j < JointType_Count; j++)
 	{
@@ -355,12 +358,14 @@ float CBodyBasics::allJoints_timeAveraged_DepthPoints(int limb)
 	}
 	depthBuffer.push_back(jointDepthPoints);
 	if (depthBuffer.size() > 5) depthBuffer.erase(depthBuffer.begin());
+	int flag = 0;
 	for (auto &i : depthBuffer)
 	{
 		for (int j = 0; j < JointType_Count; j++)
 		{
-			if (j == 0)
+			if (flag == 0)
 			{
+				
 				timeAveraged_DepthPoint[j] = i.jointsDepth[j];
 			}
 			else
@@ -368,6 +373,7 @@ float CBodyBasics::allJoints_timeAveraged_DepthPoints(int limb)
 				timeAveraged_DepthPoint[j] += i.jointsDepth[j];
 			}
 		}
+		flag = 1;
 	}
 	for (int j = 0; j < JointType_Count; j++)
 	{
@@ -391,12 +397,14 @@ sf::Vector2f CBodyBasics::arms_legs_timeAveraged_PointsXY(int limb)
 
 	vec_Buffer.push_back(vec_b);
 	if (vec_Buffer.size() > 5) vec_Buffer.erase(vec_Buffer.begin());
+	int flag = 0;
 	for (auto &i : vec_Buffer)
 	{
 		for (int j = 0; j < LEFT_LEG + 1; j++)
 		{
-			if (j == 0)
+			if (flag == 0)
 			{
+				
 				timeAveraged_Point[j].x = i.joints[j].x;
 				timeAveraged_Point[j].y = i.joints[j].y;
 			}
@@ -406,6 +414,7 @@ sf::Vector2f CBodyBasics::arms_legs_timeAveraged_PointsXY(int limb)
 				timeAveraged_Point[j].y += i.joints[j].y;
 			}
 		}
+		flag = 1;
 	}
 	for (int j = 0; j < LEFT_LEG + 1; j++)
 	{
@@ -430,12 +439,14 @@ float CBodyBasics::arms_legs_timeAveraged_DepthPoints(int limb)
 	}
 	depthBuffer.push_back(jointDepthPoints);
 	if (depthBuffer.size() > 5) depthBuffer.erase(depthBuffer.begin());
+	int flag = 0;
 	for (auto &i : depthBuffer)
 	{
 		for (int j = 0; j < LEFT_LEG+1; j++)
 		{
-			if (j == 0)
+			if (flag == 0)
 			{
+				
 				timeAveraged_DepthPoint[j] = i.jointsDepth_4[j];
 			}
 			else
@@ -443,6 +454,7 @@ float CBodyBasics::arms_legs_timeAveraged_DepthPoints(int limb)
 				timeAveraged_DepthPoint[j] += i.jointsDepth_4[j];
 			}
 		}
+		flag = 1;
 	}
 	for (int j = 0; j < LEFT_LEG+1; j++)
 	{
